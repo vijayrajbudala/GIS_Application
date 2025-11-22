@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Service Requests – Add Local Points with Service Renderer</title>
+
+  <!-- ArcGIS JS API -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.30/"></script>
+
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    #viewDiv {
+      height: calc(100% - 60px);
+      width: 100%;
+    }
+
+    .top-panel {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      gap: 8px;
+      box-sizing: border-box;
+      border-bottom: 1px solid #ddd;
+      background: #f7f7f7;
+    }
+
+    .top-panel label {
+      font-weight: bold;
+      margin-right: 4px;
+    }
+
+    .top-panel select,
+    .top-panel button {
+      padding: 4px 8px;
+      font-size: 14px;
+    }
+
+    .top-panel button {
+      cursor: pointer;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #eee;
+      font-size: 11px;
+      margin-left: 4px;
+    }
+
+    .add-mode-on {
+      background-color: #2e7d32;
+      color: #fff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-panel">
+    <label for="statusSelect">Status:</label>
+    <select id="statusSelect">
+      <option value="">-- choose status --</option>
+      <!-- options added dynamically from renderer -->
+    </select>
+
+    <button id="toggleAddBtn">Start Add Mode</button>
+    <button id="downloadJsonBtn">Download JSON</button>
+
+    <span id="addModeInfo" class="status-badge">
+      Click "Start Add Mode" and then click on the map to add a point.
+    </span>
+  </div>
+
+  <div id="viewDiv"></div>
+<script src="script.js"></script>
+</body>
+
+</html>
