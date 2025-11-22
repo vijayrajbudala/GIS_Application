@@ -1,0 +1,9 @@
+.esri-layer-list__item-label {
+  color: #000 !important;    /* black text */
+  font-size: 12px;           /* normal size */
+}
+.esri-layer-list__item {
+  background-color: #f0f0f0 !important;  /* light gray background */
+  border-radius: 4px;                    /* rounded corners */
+  margin-bottom: 4px;                    /* space between items */
+}
