@@ -158,6 +158,10 @@ require([
         return;
       }
 
+
+      featuresData = arr;
+
+
       featuresData = arr;
 
       const graphics = arr.map((item) => {
@@ -213,6 +217,40 @@ require([
       if (!featuresData.length) {
         alert("No local features to download.");
         return;
+
+      }
+      const jsonStr = JSON.stringify(featuresData, null, 2);
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "local_service_requests.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  // -------------------------------------------------------------------
+  // 4e. Map click handler – add local feature using selected status
+  // -------------------------------------------------------------------
+  function setupMapClickHandler() {
+    view.on("click", function (event) {
+      if (!addMode) {
+        return; // only add when addMode is ON
+      }
+
+      const selectedStatus = statusSelect.value;
+      if (!selectedStatus) {
+        alert("Please choose a status from the dropdown first.");
+        return;
+      }
+
+      // Convert screen click to map point
+      const point = view.toMap(event);
+
       }
       const jsonStr = JSON.stringify(featuresData, null, 2);
       const blob = new Blob([jsonStr], { type: "application/json" });
@@ -314,6 +352,9 @@ require([
       console.error("Error saving to localStorage:", err);
     }
   }
+
+  console.log("gfdsg");
+
   console.log("TEXT");
 
   //fndjhfie
