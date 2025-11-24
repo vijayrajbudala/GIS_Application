@@ -355,7 +355,6 @@ require([
 
   console.log("gfdsg");
 
-  console.log("TEXT");
 
   //fndjhfie
 });
