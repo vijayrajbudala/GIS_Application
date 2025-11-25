@@ -3,7 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>GIS Application</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        height: 100vh;
+        margin: 0;
+        width: 100vw;
+        padding: 0;
+      }
+    </style>
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/3.3.3/calcite.esm.js"
+    ></script>
+    <script src="https://js.arcgis.com/4.29/"></script>
   </head>
-  <body></body>
+  <body>
+    <div id="viewDiv">
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
