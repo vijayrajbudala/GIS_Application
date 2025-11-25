@@ -314,4 +314,5 @@ require([
       console.error("Error saving to localStorage:", err);
     }
   }
+  console.log("Test");
 });
