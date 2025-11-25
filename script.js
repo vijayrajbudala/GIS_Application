@@ -331,6 +331,9 @@ require([
               status: selectedStatus,
               geometry: point.toJSON(),
             };
+
+
+            
             featuresData.push(record);
             saveToLocalStorage();
             featureIdCounter += 1;
@@ -357,5 +360,5 @@ require([
 
   console.log("TEXT");
 
-  //fndjhfie
+  //fndjhfiebrstdghsfghndfjdfjhdfjhrtf
 });
