@@ -1,4 +1,4 @@
-require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (Map, MapView, FeatureLayer) {
+require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/FeatureTable"], function (Map, MapView, FeatureLayer, FeatureTable) {
   const myMap = new Map({
     basemap: "topo",
   });
@@ -15,5 +15,10 @@ require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function
     myMap.add(fLayer);
     fLayer.when(() => {
         myView.goTo(fLayer.fullExtent);
+    });
+    const featureTable = new FeatureTable({
+        view: myView,
+        layer: fLayer,
+        container: "tableDiv"
     });
 });
