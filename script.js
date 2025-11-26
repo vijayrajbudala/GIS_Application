@@ -5,9 +5,10 @@ require([
   "esri/widgets/ScaleBar",
   "esri/widgets/Bookmarks",
     "esri/widgets/Expand",
-  "esri/widgets/Measurement"
+    "esri/widgets/Measurement",
+  "esri/widgets/FeatureTable"
 
-], function (Map, MapView, FeatureLayer, ScaleBar, Bookmarks, Expand, Measurement) {
+], function (Map, MapView, FeatureLayer, ScaleBar, Bookmarks, Expand, Measurement, FeatureTable) {
 
   const myMap = new Map({
     basemap: "topo",
@@ -51,5 +52,11 @@ require([
         activeTool: "distance"
     });
     myView.ui.add(measurement, "top-left");
+
+    const featureTable = new FeatureTable({
+        view: myView,
+        layer: fLayer,
+        container: "tableDiv"
+    });
 
 });
