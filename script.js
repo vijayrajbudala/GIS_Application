@@ -46,12 +46,10 @@ require([
 
     myView.ui.add(bkExpand, "top-right");
 
-
     const measurement = new Measurement({
         view: myView,
         activeTool: "distance"
     });
-
     myView.ui.add(measurement, "top-left");
 
 });
