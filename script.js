@@ -7,11 +7,20 @@ require([
   "esri/widgets/Expand",
   "esri/widgets/Measurement",
   "esri/widgets/FeatureTable",
-  "esri/widgets/BasemapToggle"
+  "esri/widgets/BasemapToggle",
+  "esri/widgets/LayerList",
 ], function (
-  Map, MapView, FeatureLayer, ScaleBar, Bookmarks, Expand, Measurement, FeatureTable, BasemapToggle
+  Map,
+  MapView,
+  FeatureLayer,
+  ScaleBar,
+  Bookmarks,
+  Expand,
+  Measurement,
+  FeatureTable,
+  BasemapToggle,
+  LayerList
 ) {
-
   const myMap = new Map({
     basemap: "topo",
   });
@@ -22,7 +31,7 @@ require([
   });
 
   const fLayer = new FeatureLayer({
-    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/ServiceRequest/FeatureServer/0"
+    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/ServiceRequest/FeatureServer/0",
   });
 
   myMap.add(fLayer);
@@ -33,39 +42,45 @@ require([
 
   const scaleBar = new ScaleBar({
     view: myView,
-    unit: "metric"
+    unit: "metric",
   });
   myView.ui.add(scaleBar, "bottom-left");
 
   const bookmarks = new Bookmarks({
-    view: myView
+    view: myView,
   });
 
   const bkExpand = new Expand({
     view: myView,
     content: bookmarks,
-    expanded: false
+    expanded: false,
   });
   myView.ui.add(bkExpand, "top-right");
 
   const measurement = new Measurement({
     view: myView,
-    activeTool: "distance"
+    activeTool: "distance",
   });
   myView.ui.add(measurement, "top-left");
 
   const featureTable = new FeatureTable({
     view: myView,
     layer: fLayer,
-    container: "tableDiv"
+    container: "tableDiv",
   });
 
- 
   const basemapToggle = new BasemapToggle({
     view: myView,
-    nextBasemap: "satellite"
+    nextBasemap: "satellite",
   });
 
   myView.ui.add(basemapToggle, "bottom-right");
 
+  const layerList = new LayerList({
+    view: myView,
+  });
+
+  myView.ui.add(layerList, {
+    position: "top-left",
+  });
 });
