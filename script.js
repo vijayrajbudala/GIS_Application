@@ -1,4 +1,12 @@
-require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function (Map, MapView, FeatureLayer) {
+require([
+  "esri/Map",
+  "esri/views/MapView",
+  "esri/layers/FeatureLayer",
+  "esri/widgets/ScaleBar",
+  "esri/widgets/Bookmarks",
+  "esri/widgets/Expand"
+], function (Map, MapView, FeatureLayer, ScaleBar, Bookmarks, Expand) {
+
   const myMap = new Map({
     basemap: "topo",
   });
@@ -8,12 +16,32 @@ require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], function
     map: myMap,
   });
 
-    const fLayer = new FeatureLayer({
-        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/ServiceRequest/FeatureServer/0"
-    });
+  const fLayer = new FeatureLayer({
+    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/ServiceRequest/FeatureServer/0"
+  });
 
-    myMap.add(fLayer);
-    fLayer.when(() => {
-        myView.goTo(fLayer.fullExtent);
-    });
+  myMap.add(fLayer);
+
+  fLayer.when(() => {
+    myView.goTo(fLayer.fullExtent);
+  });
+  
+  const scaleBar = new ScaleBar({
+    view: myView,
+    unit: "metric" 
+  });
+  myView.ui.add(scaleBar, "bottom-left");
+
+  const bookmarks = new Bookmarks({
+    view: myView
+  });
+
+  const bkExpand = new Expand({
+    view: myView,
+    content: bookmarks,
+    expanded: false
+  });
+
+  myView.ui.add(bkExpand, "top-right");
+
 });
