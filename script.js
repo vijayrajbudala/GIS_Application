@@ -81,28 +81,49 @@ require([
   myView.ui.add(layerList, {
     position: "top-left",
   });
-  
+
 
   // Populate state select dropdown
   const stateSelect = document.getElementById("stateSelect");
-  esriRequest(layerURL + "/query", {
-    query: {
-      where: "1=1",
-      outFields: "NAME",
-      orderByFields: "NAME ASC",
-      f: "json"
-    },
-    responseType: "json"
-  }).then(function(response){
-    const features = response.data.features;
-    console.log("this is the response from the esri Request", features);
-    features.forEach(function(feature){
-      const name = feature.attributes.NAME;
-      if(!name) return;
-      const option = document.createElement("option");
-      option.value = name;
-      option.textContent = name;
-      stateSelect.appendChild(option);
+
+  function loadStates() {
+    esriRequest(layerURL + "/query", {
+      query: {
+        where: "1=1",
+        outFields: "NAME",
+        orderByFields: "NAME ASC",
+        f: "json"
+      },
+      responseType: "json"
+    }).then(function (response) {
+      const features = response.data.features;
+      console.log("this is the response from the esri Request", features);
+      features.forEach(function (feature) {
+        const name = feature.attributes.NAME;
+        if (!name) return;
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        stateSelect.appendChild(option);
+      })
     })
+
+    //when state is selected, zoom to state
+    stateSelect.addEventListener("change", function () {
+      const selectedState = stateSelect.value;
+      const where = "NAME = '" + selectedState + "'";
+      fLayer.definitionExpression = where;
+      fLayer.queryExtent({
+        where: where
+      }).then(function (result) {
+        if (result.extent) {
+          myView.goTo(result.extent);
+        }
+      })
+    });
+  }
+  // loadStates();
+  myView.when(function(){
+    loadStates();
   })
 });
