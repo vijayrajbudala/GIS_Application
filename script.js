@@ -5,10 +5,10 @@ require([
   "esri/widgets/ScaleBar",
   "esri/widgets/Bookmarks",
   "esri/widgets/Expand",
-  "esri/widgets/Measurement",
   "esri/widgets/FeatureTable",
   "esri/widgets/BasemapToggle",
   "esri/widgets/LayerList",
+  "esri/request"
 ], function (
   Map,
   MapView,
@@ -16,10 +16,10 @@ require([
   ScaleBar,
   Bookmarks,
   Expand,
-  Measurement,
   FeatureTable,
   BasemapToggle,
-  LayerList
+  LayerList,
+  esriRequest
 ) {
   const myMap = new Map({
     basemap: "topo",
@@ -28,10 +28,14 @@ require([
   const myView = new MapView({
     container: "viewDiv",
     map: myMap,
+    center: [-98.5795, 39.8283],
+    zoom: 4,
   });
 
+  const layerURL = "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/BLS_Monthly_Unemployment_Current_14_Months/FeatureServer/1";
+
   const fLayer = new FeatureLayer({
-    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/ServiceRequest/FeatureServer/0",
+    url: layerURL,
   });
 
   myMap.add(fLayer);
@@ -57,12 +61,6 @@ require([
   });
   myView.ui.add(bkExpand, "top-right");
 
-  const measurement = new Measurement({
-    view: myView,
-    activeTool: "distance",
-  });
-  myView.ui.add(measurement, "top-left");
-
   const featureTable = new FeatureTable({
     view: myView,
     layer: fLayer,
@@ -83,4 +81,28 @@ require([
   myView.ui.add(layerList, {
     position: "top-left",
   });
+  
+
+  // Populate state select dropdown
+  const stateSelect = document.getElementById("stateSelect");
+  esriRequest(layerURL + "/query", {
+    query: {
+      where: "1=1",
+      outFields: "NAME",
+      orderByFields: "NAME ASC",
+      f: "json"
+    },
+    responseType: "json"
+  }).then(function(response){
+    const features = response.data.features;
+    console.log("this is the response from the esri Request", features);
+    features.forEach(function(feature){
+      const name = feature.attributes.NAME;
+      if(!name) return;
+      const option = document.createElement("option");
+      option.value = name;
+      option.textContent = name;
+      stateSelect.appendChild(option);
+    })
+  })
 });
