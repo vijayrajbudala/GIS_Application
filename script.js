@@ -37,7 +37,6 @@ require([
   const fLayer = new FeatureLayer({
     url: layerURL,
   });
-
   myMap.add(fLayer);
 
   fLayer.when(() => {
@@ -113,6 +112,8 @@ require([
       const selectedState = stateSelect.value;
       const where = "NAME = '" + selectedState + "'";
       fLayer.definitionExpression = where;
+      fLayer.minScale = 0; // no minimum (visible even when zoomed way out)
+      fLayer.maxScale = 0; // no maximum (visible even when zoomed way in)
       fLayer.queryExtent({
         where: where
       }).then(function (result) {
@@ -123,7 +124,7 @@ require([
     });
   }
   // loadStates();
-  myView.when(function(){
+  myView.when(function () {
     loadStates();
   })
 });
