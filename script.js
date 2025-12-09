@@ -36,6 +36,16 @@ require([
 
   const fLayer = new FeatureLayer({
     url: layerURL,
+    outFields: ["*"],
+    popupTemplate:
+    {
+      title: "{NAME} Unemployment Data",
+      content: `
+      <b>Unemployment Rate {P04Month}:</b> {Unemployed_04Month}<br>
+      <b>Unemployment Rate {P03Month}:</b> {Unemployed_03Month}<br>
+    `,
+
+    }
   });
   myMap.add(fLayer);
 
@@ -126,5 +136,6 @@ require([
   // loadStates();
   myView.when(function () {
     loadStates();
+    myView.ui.add("stateSelect", "top-right");
   })
 });
